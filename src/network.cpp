@@ -3,11 +3,7 @@ SGD learning algorithm for a MNIST-trained neural network on CPU.
 Gradients are calculated using backpropagation.
 */
 
-#include "network.hpp"
-#include <iostream>
-#include <random>
-#include <algorithm>
-#include <cmath>
+#include "network.h"
 
 Network::Network(const std::vector<int>& sizes) {
     num_layers = sizes.size();
@@ -84,10 +80,11 @@ void Network::sgd(
         }
         
         if (test_data != nullptr) {
-            int n_test = test_data->size();
-            std::cout << "Epoch " << i << "with Accuracy: " << this->evaluate(*test_data) << " / " << n_test << std::endl;
+            double curr_accuracy = (static_cast<double>(this->evaluate(*test_data)) / test_data->size()) * 100.0;
+            double curr_cost = this->calculate_cost(training_data);
+            std::cout << "Epoch " << i + 1 << " with Accuracy: " << curr_accuracy << "% and Cost: " << curr_cost << std::endl;
         } else {
-            std::cout << "Epoch " << i << " complete" << std::endl;
+            std::cout << "Epoch " << i + 1 << " complete" << std::endl;
         }
     }
 }
@@ -285,6 +282,25 @@ Vector Network::cost_derivative(const Vector& output_activation, const Vector& y
         arr[i] = output_activation[i] - y[i];
     }
     return arr;
+}
+
+double Network::calculate_cost(const std::vector<std::pair<Vector, Vector>>& data) {
+    double total_loss = 0.0;
+    for (int i = 0; i < data.size(); i++) {
+        const Vector& x = data[i].first;
+        const Vector& y = data[i].second;
+        
+        Vector prediction = this->feed_forward(x);
+        
+        double image_loss = 0.0;
+        for (int j = 0; j < prediction.size(); j++) {
+            double error = prediction[j] - y[j];
+            image_loss += (error * error); 
+        }
+        total_loss += (0.5 * image_loss);
+    }
+
+    return total_loss / data.size();
 }
 
 Vector sigmoid(const Vector& z) {
