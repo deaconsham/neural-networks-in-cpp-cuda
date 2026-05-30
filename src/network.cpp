@@ -15,7 +15,7 @@ Network::Network(const std::vector<int>& sizes) {
 
     // initialize biases
     for (int i = 1; i < sizes.size(); i++) {
-        Vector layer_biases; // Swapped to alias
+        Vector layer_biases;
         for (int j = 0; j < sizes[i]; j++) {
             layer_biases.push_back(dis(gen));
         }
@@ -24,12 +24,12 @@ Network::Network(const std::vector<int>& sizes) {
 
     // initialize weights
     for (int i = 0; i < sizes.size() - 1; i++) {
-        Matrix layer_weights; // Swapped to alias
+        Matrix layer_weights;
         int row = sizes[i + 1];
         int col = sizes[i];
 
         for (int j = 0; j < row; j++) {
-            Vector neuron_weights; // Swapped to alias
+            Vector neuron_weights;
             for (int k = 0; k < col; k++) {
                 neuron_weights.push_back(dis(gen));
             }

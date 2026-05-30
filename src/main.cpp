@@ -12,7 +12,7 @@ int main() {
     std::vector<std::pair<std::vector<double>, std::vector<double>>> training_data;
     training_data.reserve(train_loader.size);
 
-    for (int i = 0; i < train_loader.size; ++i) {
+    for (int i = 0; i < train_loader.size; i++) {
         std::vector<double> label(10, 0.0);
         label[train_loader.labels[i]] = 1.0; 
         training_data.push_back(std::make_pair(train_loader.images[i], label));
