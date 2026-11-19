@@ -9,10 +9,9 @@ Header file to load the MNIST file and covert pixels into float values.
 #include <fstream>
 #include <string>
 #include <cassert>
+#include <vector>
 
-using Vector = std::vector<double>;
-using Matrix = std::vector<Vector>;
-using Tensor = std::vector<Matrix>;
+#include "common.h"
 
 class MNIST_Loader {
 public:

@@ -1,4 +1,5 @@
 neural_network
+neural_network_cuda
 *.out
 *.exe
 *.o
@@ -6,3 +7,4 @@ neural_network
 .DS_Store
 .vscode/
 .idea/
+network2.txt

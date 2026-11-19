@@ -9,10 +9,10 @@ Gradients are calculated using backpropagation.
 #include <iostream>
 #include <random>
 #include <cmath>
+#include <vector>
+#include <algorithm>
 
-using Vector = std::vector<double>;
-using Matrix = std::vector<Vector>;
-using Tensor = std::vector<Matrix>;
+#include "common.h"
 
 class Network {
     public:

@@ -92,17 +92,13 @@ void Network::sgd(
 void Network::update_mini_batch(std::vector<std::pair<Vector, Vector>>& mini_batch, double learning_rate) {
     Matrix nabla_b = biases;
     for (int i = 0; i < nabla_b.size(); i++) {
-        for (int j = 0; j < nabla_b[i].size(); j++) {
-            nabla_b[i][j] = 0.0;
-        }
+        std::fill(nabla_b[i].begin(), nabla_b[i].end(), 0.0);
     }
 
     Tensor nabla_w = weights;
     for (int i = 0; i < nabla_w.size(); i++) {
         for (int j = 0; j < nabla_w[i].size(); j++) {
-            for (int k = 0; k < nabla_w[i][j].size(); k++) {
-                nabla_w[i][j][k] = 0.0;
-            }
+            std::fill(nabla_w[i][j].begin(), nabla_w[i][j].end(), 0.0);
         }
     }
 
@@ -148,21 +144,9 @@ void Network::update_mini_batch(std::vector<std::pair<Vector, Vector>>& mini_bat
 }
 
 std::pair<Matrix, Tensor> Network::backpropagation(const Vector& x, const Vector& y) {
+    // copied only for their shape, every entry is overwritten below
     Matrix nabla_b = biases;
-    for (int i = 0; i < nabla_b.size(); i++) {
-        for (int j = 0; j < nabla_b[i].size(); j++) {
-            nabla_b[i][j] = 0.0;
-        }
-    }
-
     Tensor nabla_w = weights;
-    for (int i = 0; i < nabla_w.size(); i++) {
-        for (int j = 0; j < nabla_w[i].size(); j++) {
-            for (int k = 0; k < nabla_w[i][j].size(); k++) {
-                nabla_w[i][j][k] = 0.0;
-            }
-        }
-    }
 
     Vector activation = x;
     Matrix activations;
@@ -255,21 +239,8 @@ int Network::evaluate(const std::vector<std::pair<Vector, int>>& test_data) {
         const Vector& x = test_data[i].first;
         int y = test_data[i].second;
 
-        Vector result = this->feed_forward(x);
-
-        // find index of the highest activation
-
-        int max_idx = 0;
-        double max_val = result[0];
-        for (int j = 1; j < result.size(); j++) {
-            if (result[j] > max_val) {
-                max_val = result[j];
-                max_idx = j;
-            }
-        }
-
         // if neural network's guess matches the label, increment count
-        if (max_idx == y) {
+        if (argmax(this->feed_forward(x)) == y) {
             count++;
         }
     }
