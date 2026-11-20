@@ -1,6 +1,6 @@
 # neural-networks-in-cpp-cuda
 
-MNIST neural network training C++ and Standard Library implementation, and an Nvidia CUDA implementation that trains on the GPU.
+MNIST neural network training C++ and an Nvidia CUDA implementation that trains on the GPU.
 Based on [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/index.html) by Michael Nielsen.
 Original implementation was using Python and NumPy without PyTorch, and Theano for the convolutional network.
 Every network here is written from scratch, including backpropagation through the convolutional, pooling and dropout layers.
